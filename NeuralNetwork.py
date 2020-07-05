@@ -440,14 +440,13 @@ if __name__ == '__main__':
 	parser = OptionParser()
 	
 	parser.add_option("-i", "--input", action='store', dest="number_inputs", help="Number of input nodes")
-	parser.add_option("-h", "--hidden", action='store', dest="number_hidden", help="Number of hidden layer nodes")
+	parser.add_option("--i-hidden", "--hidden", action='store', dest="number_hidden", help="Number of hidden layer nodes")
 	parser.add_option("-o", "--output", action="store", dest="number_output", help="Number of output nodes")
 	parser.add_option("-d", "--database", action="store", dest="database", help="database file path")
 	parser.add_option("-r", "--rate", action="store", dest="learning_rate", help="Initial learning rate")
 	parser.add_option("-l", "--loss", action="store", dest="loss", help="loss function")
-	parser.add_option("-op", "--optimize", action="store", dest="optimize", help="optimization")
+	parser.add_option("--o-optimize", "--optimize", action="store", dest="optimize", help="optimization")
 	parser.add_option("-e", "--epochs", action="store", dest="epochs", help="number of epoches")
-	parser.add_option('--mode', action='store', default='run', type='string', dest='mode')
 
 	(options, args) = parser.parse_args()
 
@@ -457,37 +456,37 @@ if __name__ == '__main__':
 	else:
 		DATABASE = 'Big_Database_2.csv'
 
-	if option.number_inputs:
+	if options.number_inputs:
 		n_inputs = option.number_inputs
 	else:
 		n_inputs = 7
 
-	if option.number_hidden:
+	if options.number_hidden:
 		n_hidden = option.number_hidden
 	else:
 		n_hidden = 7
 
-	if option.number_output:
+	if options.number_output:
 		n_outputs = option.number_output
 	else:
 		n_outputs = 3
 
-	if option.learning_rate:
+	if options.learning_rate:
 		init_l_rate = option.learning_rate
 	else:
 		init_l_rate = .9
 
-	if option.epochs:
+	if options.epochs:
 		epoch = option.epochs
 	else:
 		epoch = 20
 
-	if option.optimize:
+	if options.optimize:
 		optimize = option.optimize
 	else:
 		optimize = 'sgd'
 
-	if option.loss:
+	if options.loss:
 		loss = option.loss
 	else:
 		loss = 'cost'
