@@ -163,18 +163,18 @@ class NN:
 		return Vdw, Sdw, epsilon
 
 	# Calculate the MEANS SQUARED ERROR, ROOT MEAN SQUARED ERROR and ARCTAN ERROR for the training database
-	def tr_calc_err(self, o_weights, h_weights, tr_data):
+	def tr_calc_err(self, o_weights, h_weights):
 		a = 0  # var for activation
 		out_h = [0 for x in range(self.n_hidden)]
 		out_o = [0 for x in range(self.n_outputs)]
 		inp = [0 for x in range(self.n_inputs)]
 		target = [0 for x in range(self.n_outputs)]
 		# Feeding forward after each epoch to calculate error
-		for j in range(len(tr_data)):
+		for j in range(len(self.training_database)):
 			for i in range(self.n_inputs):
-				inp[i] = float(tr_data[j][i])
+				inp[i] = float(self.training_database[j][i])
 			for i in range(self.n_outputs):
-				target[i] = float(tr_data[j][i+7])
+				target[i] = float(self.training_database[j][i+7])
 			for i in range(self.n_hidden):
 				a = self.activate(h_weights[i], inp)
 				out_h[i] = self.sigmoid(a)
@@ -184,8 +184,8 @@ class NN:
 			for i in range(self.n_outputs):
 				self.mean_sqrd_error[self.tr_counter] += (target[i] - out_o[i])**2  #calculate error
 				self.arctan_error[self.tr_counter] += (atan(target[i] - out_o[i]))**2  #calculate error
-		self.mean_sqrd_error[self.tr_counter] = (self.mean_sqrd_error[self.tr_counter] / len(tr_data))*100  #store error
-		self.arctan_error[self.tr_counter] = (self.arctan_error[self.tr_counter] / len(tr_data))*100  #store error
+		self.mean_sqrd_error[self.tr_counter] = (self.mean_sqrd_error[self.tr_counter] / len(self.training_database))*100  #store error
+		self.arctan_error[self.tr_counter] = (self.arctan_error[self.tr_counter] / len(self.training_database))*100  #store error
 		self.rt_mean_sqrd_error[self.tr_counter] = (self.mean_sqrd_error[self.tr_counter]**(1.0/2))  #store error
 		return self.mean_sqrd_error, self.rt_mean_sqrd_error, self.arctan_error
 
@@ -329,7 +329,7 @@ class NN:
 							h_weights[j][k] = self.u_h_weights[j][k]  #update weights
 			self.sum_tr_accuracy[m] = self.tr_accuracy / (len(self.training_database))  # Calculate the final mean accuracy after first epoch
 			self.tr_accuracy = 0  # Clear accuracy for next epoch iterations
-			self.tr_mean_sqrd_error, self.tr_rt_mean_sqrd_error, self.tr_arctan_error = self.tr_calc_err(o_weights, h_weights, self.training_database, self.tr_counter)  # calculate the error of the neural network after each iteration
+			self.tr_mean_sqrd_error, self.tr_rt_mean_sqrd_error, self.tr_arctan_error = self.tr_calc_err(o_weights, h_weights)  # calculate the error of the neural network after each iteration
 			self.tr_counter += 1  # counter for storing training errors
 		#	random.shuffle(training_database)  # shuffle training database for next epoch
 			pbar.update(m)  # update progressbar
@@ -457,37 +457,37 @@ if __name__ == '__main__':
 		DATABASE = 'Big_Database_2.csv'
 
 	if options.number_inputs:
-		n_inputs = option.number_inputs
+		n_inputs = options.number_inputs
 	else:
 		n_inputs = 7
 
 	if options.number_hidden:
-		n_hidden = option.number_hidden
+		n_hidden = options.number_hidden
 	else:
 		n_hidden = 7
 
 	if options.number_output:
-		n_outputs = option.number_output
+		n_outputs = options.number_output
 	else:
 		n_outputs = 3
 
 	if options.learning_rate:
-		init_l_rate = option.learning_rate
+		init_l_rate = options.learning_rate
 	else:
 		init_l_rate = .9
 
 	if options.epochs:
-		epoch = option.epochs
+		epoch = options.epochs
 	else:
 		epoch = 20
 
 	if options.optimize:
-		optimize = option.optimize
+		optimize = options.optimize
 	else:
 		optimize = 'sgd'
 
 	if options.loss:
-		loss = option.loss
+		loss = options.loss
 	else:
 		loss = 'cost'
 
