@@ -138,29 +138,29 @@ class NN:
 
 	# Adam optimizer for the hidden and output weights
 	def Adam(self, dw, epoch, case):
-	# Initialize hyperparameters
-	beta1 = 0.9
-	beta2 = 0.999
-	epsilon = 1e-8
-	if case == 'output':
-		Vdw = [[0 for x in range(self.n_hidden)] for y in range(self.n_outputs)]  #Initialize parameters
-		Sdw = [[0 for x in range(self.n_hidden)] for y in range(self.n_outputs)]  #Initialize parameters
-		for i in range(self.n_outputs):
-			for j in range(self.n_hidden):
-				Vdw[i][j] = beta1*Vdw[i][j] + (1 - beta1)*dw[i][j]
-				Sdw[i][j] = beta2*Sdw[i][j] + (1 - beta2)*(dw[i][j]**2)
-				Vdw[i][j] = Vdw[i][j] / (1 - (beta1**(epoch+1)))
-				Sdw[i][j] = Sdw[i][j] / (1 - (beta2**(epoch+1)))
-	elif case == 'hidden':
-		Vdw = [[0 for x in range(self.n_inputs)] for y in range(self.n_hidden)]  # Initialize parameters
-		Sdw = [[0 for x in range(self.n_inputs)] for y in range(self.n_hidden)]  # Initialize parameters
-		for i in range(self.n_hidden):
-			for j in range(self.n_inputs):
-				Vdw[i][j] = beta1*Vdw[i][j] + (1 - beta1)*dw[i][j]
-				Sdw[i][j] = beta2*Sdw[i][j] + (1 - beta2)*(dw[i][j]**2)
-				Vdw[i][j] = Vdw[i][j] / (1 - (beta1**(epoch+1)))
-				Sdw[i][j] = Sdw[i][j] / (1 - (beta2**(epoch+1)))
-	return Vdw, Sdw, epsilon
+		# Initialize hyperparameters
+		beta1 = 0.9
+		beta2 = 0.999
+		epsilon = 1e-8
+		if case == 'output':
+			Vdw = [[0 for x in range(self.n_hidden)] for y in range(self.n_outputs)]  #Initialize parameters
+			Sdw = [[0 for x in range(self.n_hidden)] for y in range(self.n_outputs)]  #Initialize parameters
+			for i in range(self.n_outputs):
+				for j in range(self.n_hidden):
+					Vdw[i][j] = beta1*Vdw[i][j] + (1 - beta1)*dw[i][j]
+					Sdw[i][j] = beta2*Sdw[i][j] + (1 - beta2)*(dw[i][j]**2)
+					Vdw[i][j] = Vdw[i][j] / (1 - (beta1**(epoch+1)))
+					Sdw[i][j] = Sdw[i][j] / (1 - (beta2**(epoch+1)))
+		elif case == 'hidden':
+			Vdw = [[0 for x in range(self.n_inputs)] for y in range(self.n_hidden)]  # Initialize parameters
+			Sdw = [[0 for x in range(self.n_inputs)] for y in range(self.n_hidden)]  # Initialize parameters
+			for i in range(self.n_hidden):
+				for j in range(self.n_inputs):
+					Vdw[i][j] = beta1*Vdw[i][j] + (1 - beta1)*dw[i][j]
+					Sdw[i][j] = beta2*Sdw[i][j] + (1 - beta2)*(dw[i][j]**2)
+					Vdw[i][j] = Vdw[i][j] / (1 - (beta1**(epoch+1)))
+					Sdw[i][j] = Sdw[i][j] / (1 - (beta2**(epoch+1)))
+		return Vdw, Sdw, epsilon
 
 	# Calculate the MEANS SQUARED ERROR, ROOT MEAN SQUARED ERROR and ARCTAN ERROR for the training database
 	def tr_calc_err(self, o_weights, h_weights, tr_data):
