@@ -457,27 +457,27 @@ if __name__ == '__main__':
 		DATABASE = 'Big_Database_2.csv'
 
 	if options.number_inputs:
-		n_inputs = options.number_inputs
+		n_inputs = int(options.number_inputs)
 	else:
 		n_inputs = 7
 
 	if options.number_hidden:
-		n_hidden = options.number_hidden
+		n_hidden = int(options.number_hidden)
 	else:
 		n_hidden = 7
 
 	if options.number_output:
-		n_outputs = options.number_output
+		n_outputs = int(options.number_output)
 	else:
 		n_outputs = 3
 
 	if options.learning_rate:
-		init_l_rate = options.learning_rate
+		init_l_rate = int(options.learning_rate)
 	else:
 		init_l_rate = .9
 
 	if options.epochs:
-		epoch = options.epochs
+		epoch = int(options.epochs)
 	else:
 		epoch = 20
 
